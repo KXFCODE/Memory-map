@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="uk">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Карта місць пам'яті захисників України | Одещина</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="hero-wrapper">
+    <header class="topbar" aria-label="Головна навігація">
+      <nav class="nav" aria-label="Розділи сайту">
+        <a href="#map">Карта</a>
+        <a href="#catalog">Місця пам'яті</a>
+        <a href="#sources">Джерела</a>
+        <a href="#contacts">Контакти</a>
+      </nav>
+      <button class="lang" type="button" aria-label="Мова інтерфейсу">UA</button>
+    </header>
+
+    <section class="hero" aria-label="Карта місць пам'яті">
+      <div class="hero__inner">
+        <img class="hero__crest" src="src/logo-T.png" alt="Герб Одеської області">
+        <p class="hero__eyebrow">Одеська область</p>
+        <h1>Карта місць пам'яті захисників України</h1>
+        <p class="hero__text">Офіційний прототип геоінформаційної платформи для верифікації, візуалізації та панорамного
+          огляду місць вшанування героїв на Одещині.</p>
+        <form class="search" id="searchForm">
+          <input id="searchInput" type="search" autocomplete="off" placeholder="Назва місця, громада або тип об'єкта"
+            aria-label="Пошук місць пам'яті">
+          <button type="submit" aria-label="Пошук">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="m21 21-4.4-4.4M10.8 18.2a7.4 7.4 0 1 1 0-14.8 7.4 7.4 0 0 1 0 14.8Z" />
+            </svg>
+          </button>
+        </form>
+      </div>
+    </section>
+  </div>
+
+  <main>
+
+    <section class="map-section" id="map">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Жива карта</p>
+          <h2>Реальні точки пам'яті на мапі Одещини</h2>
+        </div>
+        <div class="toolbar" aria-label="Фільтри карти">
+          <button class="filter active" type="button" data-filter="all">Усі</button>
+          <button class="filter" type="button" data-filter="Одеса">Одеса</button>
+          <button class="filter" type="button" data-filter="Меморіал">Меморіали</button>
+          <button class="filter" type="button" data-filter="Алея">Алеї</button>
+        </div>
+      </div>
+
+      <div class="workspace">
+        <div class="map-wrap">
+          <div id="memoryMap" aria-label="Інтерактивна карта OpenStreetMap"></div>
+          <div class="map-badge">
+            <strong id="visibleCount">4</strong>
+            <span>верифіковані точки прототипу</span>
+          </div>
+        </div>
+
+        <aside class="details" id="details" aria-live="polite">
+          <div class="details__photo-wrap">
+            <img id="placePhoto" src="" alt="">
+          </div>
+          <div class="details__body">
+            <p class="details__type" id="placeType"></p>
+            <h2 id="placeTitle"></h2>
+            <p class="details__location" id="placeLocation"></p>
+            <dl class="facts">
+              <div>
+                <dt>Статус</dt>
+                <dd id="placeStatus"></dd>
+              </div>
+              <div>
+                <dt>Координати</dt>
+                <dd id="placeCoords"></dd>
+              </div>
+            </dl>
+            <p class="details__description" id="placeDescription"></p>
+            <div class="actions">
+              <button class="primary" type="button" id="openPanorama">3D</button>
+              <a class="secondary" id="routeLink" target="_blank" rel="noreferrer">Маршрут</a>
+              <a class="secondary source-link" id="sourceLink" target="_blank" rel="noreferrer">Джерело</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="catalog" id="catalog">
+      <div class="section-head">
+        <div>
+          <p class="section-kicker">Каталог</p>
+          <h2>Об'єкти з реальними джерелами</h2>
+        </div>
+      </div>
+      <div class="cards" id="cards"></div>
+    </section>
+
+    <section class="sources" id="sources">
+      <div>
+        <p class="section-kicker">Прозорість даних</p>
+        <h2>Використані відкриті джерела</h2>
+      </div>
+      <ul>
+        <li>Офіційний сайт Одеської ОДА: фото та опис «Стіни пам'яті».</li>
+        <li>Укрінформ: фото та опис імпровізованого меморіалу на Катерининській площі.</li>
+        <li>УСІ Online / Informer: повідомлення про меморіал загиблим захисникам у Шабо.</li>
+        <li>Одеське життя: фото та опис Алеї Слави у селі Підгірне.</li>
+        <li>OpenStreetMap: картографічна основа інтерактивної карти.</li>
+        <li>Wikimedia Commons: офіційний герб Одеської області.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer" id="contacts">
+    <div class="footer__grid">
+      <div>
+        <h3>Громадянам</h3>
+        <a href="#map">Переглянути карту</a>
+        <a href="#catalog">Знайти місце пам'яті</a>
+        <a href="#sources">Перевірити джерела</a>
+      </div>
+      <div>
+        <h3>Громадам</h3>
+        <a href="#">Подати об'єкт</a>
+        <a href="#">Оновити картку</a>
+        <a href="#">Верифікація даних</a>
+      </div>
+      <div>
+        <h3>Платформа</h3>
+        <a href="#">Геоінформаційний модуль</a>
+        <a href="#">Панорами 360°</a>
+        <a href="#">Політика даних</a>
+      </div>
+      <div>
+        <h3>Одеська ОДА</h3>
+        <a href="https://oda.od.gov.ua/" target="_blank" rel="noreferrer">Офіційний сайт</a>
+        <a href="https://oda.od.gov.ua/strapi/uploads/odeshhyna_brendbuk_1_ea863d1a5e.pdf" target="_blank"
+          rel="noreferrer">Брендбук Одещини</a>
+        <a href="#">Контакти</a>
+      </div>
+    </div>
+    <div class="footer__bottom">
+    </div>
+  </footer>
+
+  <dialog class="pano" id="panoDialog" aria-label="Панорамний перегляд">
+    <div class="pano__top">
+      <div>
+        <p>Панорамний режим 360°</p>
+        <h2 id="panoTitle"></h2>
+      </div>
+      <button type="button" id="closePanorama">Закрити</button>
+    </div>
+    <iframe id="panoFrame" title="Google Street View panorama" loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <div class="pano__fallback">
+      <span>Якщо панорама Google Street View недоступна саме в цій точці, відкрийте найближчий перегляд у Google
+        Maps.</span>
+      <a id="panoExternal" target="_blank" rel="noreferrer">Відкрити у Google Maps</a>
+    </div>
+  </dialog>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
